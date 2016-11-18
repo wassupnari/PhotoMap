@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class PhotoMapViewController: UIViewController {
+class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -29,6 +29,31 @@ class PhotoMapViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func onCameraButtonClicked(_ sender: AnyObject) {
+        
+        let vc = UIImagePickerController()
+        vc.delegate = self
+        vc.allowsEditing = true
+//        if UIImagePickerController.isSourceTypeAvailable() {
+//            vc.sourceType = UIImagePickerControllerSourceType.camera
+//        } else {
+            vc.sourceType = UIImagePickerControllerSourceType.photoLibrary
+//        }
+        
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        // Get the image captured by the UIImagePickerController
+        let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        
+        // Do something with the images (based on your use case)
+        
+        // Dismiss UIImagePickerController to go back to your original view controller
+        dismiss(animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
