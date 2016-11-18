@@ -43,16 +43,25 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         self.present(vc, animated: true, completion: nil)
     }
     
-    func imagePickerController(picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    
+    func imagePickerController(_: UIImagePickerController, didFinishPickingMediaWithInfo: [String : Any]) {
+        
+        print("Image picker delegate")
         // Get the image captured by the UIImagePickerController
-        let originalImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        let editedImage = info[UIImagePickerControllerEditedImage] as! UIImage
+        let originalImage = didFinishPickingMediaWithInfo[UIImagePickerControllerOriginalImage] as! UIImage
+        let editedImage = didFinishPickingMediaWithInfo[UIImagePickerControllerEditedImage] as! UIImage
         
         // Do something with the images (based on your use case)
         
         // Dismiss UIImagePickerController to go back to your original view controller
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: {
+            print("Perform segue")
+            self.performSegue(withIdentifier: "tagSegue", sender: nil)
+        })
+    }
+    
+    func imagePickerControllerDidCancel(_: UIImagePickerController) {
+        print("Cancel clicked")
     }
 
     /*
