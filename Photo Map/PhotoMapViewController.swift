@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, LocationsViewControllerDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     
@@ -64,14 +64,22 @@ class PhotoMapViewController: UIViewController, UIImagePickerControllerDelegate,
         print("Cancel clicked")
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        print("prepare for segue")
+        
+        let navigationController = segue.destination as! UINavigationController
+        let locationViewController = navigationController.viewControllers[0] as! LocationsViewController
+        locationViewController.delegate = self
     }
-    */
-
+    
+    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber) {
+        print("Location delegate called")
+    }
 }
